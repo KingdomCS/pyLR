@@ -1,41 +1,41 @@
-S#A
-A#B
-B#CDEF
-C#aG;
-C#
-G#m=n
-G#G,m=n
-D#bJ;
-D#
-J#m
-J#J,m
-E#Ecm;B;
-E#
-F#m:=K
-F#dm
-F#eLf
-F#hMiF
-F#jMlF
-F#
-L#F
-L#L;F
-M#kK
-M#KNK
-N#=
-N#<>
-N#<
-N#>
-N#<=
-N#>=
-K#O
-K#PO
-K#KPO
-P#+
-P#-
-O#Q
-O#ORQ
-R#*
-R#/
-Q#m
-Q#n
-Q#(K)
+S'#<program>
+<program>#<block>
+<block>#<const-decl> <var-decl> <proc-decl> <statement>
+<const-decl>#const <const-assignment-list> ;
+<const-decl>#
+<const-assignment-list>#<ident> = <number>
+<const-assignment-list>#<const-assignment-list> , <ident> = <number>
+<var-decl>#var <ident-list> ;
+<var-decl>#
+<ident-list>#<ident>
+<ident-list>#<ident-list> , <ident>
+<proc-decl>#<proc-decl> procedure <ident> ; <block> ;
+<proc-decl>#
+<statement>#<ident> : = <expression>
+<statement>#call <ident>
+<statement>#begin <statement-list> end
+<statement>#if <condition> then <statement>
+<statement>#while <condition> do <statement>
+<statement>#
+<statement-list>#<statement>
+<statement-list>#<statement-list> ; <statement>
+<condition>#odd <expression>
+<condition>#<expression> <relation> <expression>
+<relation>#=
+<relation>#< >
+<relation>#<
+<relation>#>
+<relation>#< =
+<relation>#> =
+<expression>#<term>
+<expression>#<adding-operator> <term>
+<expression>#<expression> <adding-operator> <term>
+<adding-operator>#+
+<adding-operator>#-
+<term>#<factor>
+<term>#<term> <multiplying-operator> <factor>
+<multiplying-operator>#*
+<multiplying-operator>#/
+<factor>#<ident>
+<factor>#<number>
+<factor>#( <expression> )

@@ -29,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="lr.xlsx" />
+    <Content Include="lr3.xlsx" />
     <Content Include="mapping.txt" />
     <Content Include="productions.txt" />
   </ItemGroup>
