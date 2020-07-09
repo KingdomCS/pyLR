@@ -1,4 +1,5 @@
 import xlrd#导入用于读取Excel的库
+import xlwt#导入用于写入Excel的库
 import prettytable as pt#导入用于输出的库
 import os
 #-------------------------------------------------------------
@@ -26,6 +27,8 @@ while True:
     rule = [left, right]
     production.append(rule)#加入产生式列表
 
+file.close()
+
 filename="lr3.xlsx"#语法分析表文件名
 data = xlrd.open_workbook(filename)#打开工作簿
 table = data.sheets()[0]#打开表格
@@ -36,9 +39,37 @@ col={}#记录表头 例如:col["a"]=0
 for i in range(0,43):#表格lr宽度43
     col[str(table.cell_value(0,i).strip(' '))] = i
 
+
+#对于输出创建一个workbook 设置编码
+workbook = xlwt.Workbook(encoding = 'utf-8')
+#创建一个worksheet
+worksheet = workbook.add_sheet('Output')
+Acol=worksheet.col(0)#xlwt中是行和列都是从0开始计算的
+Bcol=worksheet.col(1)
+Ccol=worksheet.col(2)
+Dcol=worksheet.col(3)
+Ecol=worksheet.col(4)
+
+
+Acol.width=256*5
+Bcol.width=256*30
+Ccol.width=256*50
+Dcol.width=256*50
+Ecol.width=256*50
+
+
+#打开输入的文件
+input_filename = "input.txt" 
+file = open(input_filename)
+
+line = file.readline()#读入输入内容
+line = line.strip("\n")#去除行末换行符
+inputstrs=line
+
+file.close()
 #inputstrs="if <ident> > <number> then call <ident> $"#输入内容
 #inputstrs="if <ident> > <ident> then <ident> : = <ident> + <number> $"
-inputstrs="<ident> : = <number> + const $"
+#inputstrs="<ident> : = <number> + const $"
 inputstr = inputstrs.split(' ')
 
 a=inputstr[0]#输入内容的第一个符号
@@ -54,6 +85,11 @@ tb = pt.PrettyTable()
 
 tb.field_names = [" ","栈", "符号", "输入", "动作"]
 #下面循环中用A,B,C,D,E表示这五列
+worksheet.write(0,0, label = " ")
+worksheet.write(0,1, label = "栈")
+worksheet.write(0,2, label = "符号")
+worksheet.write(0,3, label = "输入")
+worksheet.write(0,4, label = "动作")
 
 #表格各列对齐方式
 tb.align[" "] = "r"
@@ -77,6 +113,11 @@ while True:
     if len(tmp)==0:
         E="Error"
         tb.add_row([A,B,C,D,E])
+        worksheet.write(cnt,0, label = A)
+        worksheet.write(cnt,1, label = B)
+        worksheet.write(cnt,2, label = C)
+        worksheet.write(cnt,3, label = D)
+        worksheet.write(cnt,4, label = E)
         break
     #移入
     elif tmp[0]=="s":
@@ -108,6 +149,11 @@ while True:
     elif tmp[0]=="a":
         E="接受"
         tb.add_row([A,B,C,D,E])
+        worksheet.write(cnt,0, label = A)
+        worksheet.write(cnt,1, label = B)
+        worksheet.write(cnt,2, label = C)
+        worksheet.write(cnt,3, label = D)
+        worksheet.write(cnt,4, label = E)
         #print("接受")
         break
     #未知错误
@@ -116,8 +162,16 @@ while True:
         print("Error!!!")
         break
     tb.add_row([A,B,C,D,E])
+    worksheet.write(cnt,0, label = A)
+    worksheet.write(cnt,1, label = B)
+    worksheet.write(cnt,2, label = C)
+    worksheet.write(cnt,3, label = D)
+    worksheet.write(cnt,4, label = E)
+
     cnt+=1
     #print("---------------------------------------------------")
 
 #输出表格
 print(tb)
+#输出表格到文件
+workbook.save('output.xls')
