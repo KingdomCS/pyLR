@@ -37,7 +37,8 @@ for i in range(0,43):#表格lr宽度43
     col[str(table.cell_value(0,i).strip(' '))] = i
 
 #inputstrs="if <ident> > <number> then call <ident> $"#输入内容
-inputstrs="if <ident> > <ident> then <ident> : = <ident> + <number> $"
+#inputstrs="if <ident> > <ident> then <ident> : = <ident> + <number> $"
+inputstrs="<ident> : = <number> + const $"
 inputstr = inputstrs.split(' ')
 
 a=inputstr[0]#输入内容的第一个符号
@@ -75,7 +76,6 @@ while True:
     #调用错误恢复例程
     if len(tmp)==0:
         E="Error"
-        #print("Error")
         tb.add_row([A,B,C,D,E])
         break
     #移入
@@ -86,13 +86,10 @@ while True:
         inputstr=inputstr[1:]#从输入中删除
         a=inputstr[0]#令a为下一个输入符号
         E="移入"
-        #print("移入")
     #规约A->β
     elif tmp[0]=="r":
         num=(int)(tmp[1:])#取出数值
-        #这里执行语义动作
-        #print("根据",production[num],"规约")
-        beta_len = len(production[num][1])#β长度(修改)
+        beta_len = len(production[num][1])#β长度
         #从符号栈中弹出产生式体的β长度个符号
         while(beta_len):
             stack_symbol.pop()#从符号栈中弹出
